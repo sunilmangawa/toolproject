@@ -1,0 +1,39 @@
+{% extends "base.html" %}
+{% block content %}
+<div class="container mt-4">
+    <div class="card-body" >
+        <!-- Display the tool content if available -->
+        {% if tool_content %}
+            <div class="tool-section">
+                {{ tool_content|safe }}
+            </div>
+        {% else %}
+            <div class="tool-section" style="margin-top: 10px; padding-top: 1px;">
+                {%include tool_content.tool_template %}
+                <!-- <form method="post" enctype="multipart/form-data" action="{% url 'converter:pdf_to_docx_converter' post.slug %}">
+                    {% csrf_token %}
+                    <input type="file" name="pdf_file" accept=".pdf" required>
+                    <button type="submit">Convert</button>
+                </form>                 -->
+            </div>
+        {% endif %}
+        <br><hr>
+    </div>
+    
+    <div class="card">
+        <div class="card-header">
+            <h2 class="card-title">{{ post.title }}</h2>
+            <p class="card-subtitle text-muted">Published {{ post.publish }} by {{ post.author }}</p>
+        </div>
+        {% if post.image %}
+            <img src="{{ post.image.url }}" class="card-img-top" alt="{{ post.title }}">
+        {% endif %}
+
+    </div>
+
+    <div class="card-body" >
+        <br><hr>
+        <p class="card-text">{{ post.body }}</p>
+    </div>
+</div><br><hr>
+{% endblock content %}

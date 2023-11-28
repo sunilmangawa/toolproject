@@ -1,0 +1,64 @@
+<!-- templates/converter/word_counter_text.html -->
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Word Counter</title>
+    
+</head>
+<body>
+    <h1>Word Counter Tool</h1>
+    <!-- <form method="post" action="/converter/word_counter_text/">
+        {% csrf_token %}
+        <textarea name="text" placeholder="Enter text here..." style="width:100%; min-height: 60px; border-style:outset; border-width: 0.2cm;"></textarea>
+        <br>
+        <input type="submit" value="Count Words">
+    </form><hr> -->
+
+    <form method="post" id="word-count-form">
+        {% csrf_token %}
+        <textarea name="text" id="text" placeholder="Enter text here..." style="width: 100%; min-height: 90px;"></textarea>
+        <br>
+        <input type="submit" value="Count Words">
+    </form>    
+    
+    <!-- Display the word count result on the page -->
+    <div id="word-count-result">
+        <div>
+            {% if word_count %}
+                <p>Word Count: {{ word_count }}</p>
+            {% else %}
+                <p>Word Count: 0</p>
+            {% endif %}
+        </div>
+    </div>
+
+    <!-- Include jQuery -->
+    <script src="https://code.jquery.com/jquery-3.6.4.min.js"></script>
+
+    <!-- Add this script at the end of your word_counter_text.html file -->
+    <script>
+        $(document).ready(function () {
+            $('#word-count-form').on('submit', function (e) {
+                e.preventDefault();
+
+                // Get the text from the textarea
+                var text = $('#text').val();
+
+                // Make an AJAX request to your word counter view
+                $.ajax({
+                    type: 'POST',
+                    url: '/converter/word_counter_text/',
+                    data: {
+                        'text': text,
+                        'csrfmiddlewaretoken': $('input[name=csrfmiddlewaretoken]').val()
+                    },
+                    success: function (data) {
+                        // Update the word count on the page
+                        $('#word-count-result').text('Word Count: ' + data.word_count);
+                    }
+                });
+            });
+        });
+    </script>    
+</body>
+</html>

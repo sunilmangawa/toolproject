@@ -1,0 +1,24 @@
+<!-- templates/converter/word_counter_text.html -->
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Word Counter</title>
+</head>
+<body>
+    <h1>Word Counter Tool</h1>
+    <form method="post" action="/converter/word_counter_text">
+        {% csrf_token %}
+        <textarea name="text" placeholder="Enter text here..." style="width:100%; min-height: 60px; border-style:outset; border-width: 0.2cm;"></textarea>
+        <br>
+        <input type="submit" value="Count Words">
+    </form><hr>
+    
+    <div>
+        {% if word_count %}
+            <p>Word Count: {{ word_count }}</p>
+        {% else %}
+            <p>Word Count: 0</p>
+        {% endif %}
+    </div><br><hr>
+</body>
+</html>
